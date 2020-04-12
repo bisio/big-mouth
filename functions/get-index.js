@@ -8,6 +8,10 @@ const Mustache = require('mustache');
 const Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const http = require('superagent-promise')(require ('superagent'), Promise);
 
+const aws4 = require('aws4');
+const URL = require('url');
+
+
 const restaurantsApiroot = process.env.restaurants_api;
 
 var html;
@@ -20,7 +24,20 @@ function* loadHtml() {
 }
 
 function* getRestaurants() {
-  return (yield http.get(restaurantsApiroot)).body;
+  let url = URL.parse(restaurantsApiroot);
+  let opts = {
+     host: url.hostname,
+     path: url.pathname
+  };
+
+  aws4.sign(opts);
+
+  return (yield http.get(restaurantsApiroot)
+                .set('Host', opts.headers['Host'])
+                .set('X-Amz-Date', opts.headers['X-Amz-Date'])
+                .set('Authorization', opts.headers['Authorization'])
+                .set('X-Amz-Security-Token', opts.headers['X-Amz-Security-Token'])
+  ).body;
 }
 
 module.exports.handler = co.wrap(function* (event, context, callback)  {
