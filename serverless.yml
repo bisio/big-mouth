@@ -33,6 +33,19 @@ functions:
           authorizer: aws_iam
     environment:
       restaurant_table: restaurants
+  search-restaurants:
+    handler: functions/search-restaurants.handler
+    events:
+      - http:
+          path: /restaurants/search
+          method: post 
+          authorizer: 
+            arn: arn:aws:cognito-idp:eu-west-1:328697909738:userpool/eu-west-1_XUJlg27NJ
+    environment:
+      restaurant_table: restaurants
+
+
+
 
 resources:
   Resources:
