@@ -11,6 +11,10 @@ const http = require('superagent-promise')(require ('superagent'), Promise);
 const aws4 = require('aws4');
 const URL = require('url');
 
+const awsRegion = process.env.AWS_REGION;
+const cognitoUserPoolId = process.env.cognito_user_pool_id;
+const cognitoClientId = process.env.cognito_client_id;
+
 
 const restaurantsApiroot = process.env.restaurants_api;
 
@@ -41,11 +45,20 @@ function* getRestaurants() {
 }
 
 module.exports.handler = co.wrap(function* (event, context, callback)  {
+
   
   let template = yield loadHtml();
   let restaurants = yield getRestaurants();
   let dayOfWeek = Days[new Date().getDay()];
-  let html = Mustache.render(template, { dayOfWeek, restaurants });
+  let view = {
+    dayOfWeek, 
+    restaurants,
+    awsRegion,
+    cognitoUserPoolId,
+    cognitoClientId,
+    searchUrl: `${restaurantsApiroot}/search`
+  }
+  let html = Mustache.render(template, view);
 
   const response =  {
     statusCode: 200,
