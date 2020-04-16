@@ -47,8 +47,6 @@ functions:
       restaurant_table: restaurants
 
 
-
-
 resources:
   Resources:
     restaurantsTable:

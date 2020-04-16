@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "integration-test": "./node_modules/.bin/mocha tests/test_cases --reporter spec"
     },
     "author": "",
     "license": "ISC",
@@ -13,12 +13,16 @@
         "bluebird": "^3.7.2",
         "co": "^4.6.0",
         "fs": "0.0.1-security",
+        "loadash": "^1.0.0",
         "mustache": "^4.0.1",
         "superagent": "^5.2.2",
         "superagent-promise": "^1.1.0"
     },
     "devDependencies": {
-        "serverless-pseudo-parameters": "^2.5.0",
-        "aws-sdk": "^2.655.0"
+        "aws-sdk": "^2.655.0",
+        "awscred": "^1.5.0",
+        "chai": "^4.2.0",
+        "mocha": "^7.1.1",
+        "serverless-pseudo-parameters": "^2.5.0"
     }
 }
