@@ -10,8 +10,8 @@ let init = co.wrap(function* (){
         return;
     }
     process.env.restaurants_api = "https://1k3vh5uqzl.execute-api.eu-west-1.amazonaws.com/dev/restaurants";
-    process.env.restaurants_table = "restaurants";
-    process.env.AWS_REGION = "eu-west-1s";
+    process.env.restaurant_table = "restaurants";
+    process.env.AWS_REGION = "eu-west-1";
     process.env.cognito_client_id = "test_cognito_client_id";
     process.env.cognito_user_pool_id = "test_cognito_user_pool_id";
 
