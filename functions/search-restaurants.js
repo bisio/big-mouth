@@ -23,7 +23,7 @@ function* findRestaurantsByTheme(theme, count) {
 }
 
 module.exports.handler = co.wrap(function* (event, context, cb){
-    let req = JSON.parse(event.body);
+    let req = JSON.parse(new Buffer(event.body,"base64").toString("ascii"));
 
     let restaurants = yield findRestaurantsByTheme(req.theme, defaultResults);
     let response = {

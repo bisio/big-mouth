@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "get-restaurants",
-            "program": "${workspaceFolder}/node_modules/.bin/sls",
+            "program": "${workspaceFolder}/node_modules/serverless/bin/serverless",
             "args": [
                 "invoke",
                 "local",
@@ -20,6 +20,42 @@
             "env": {
                 "restaurant_table":"restaurants"
             }
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "search-restaurants",
+            "program": "${workspaceFolder}/node_modules/serverless/bin/serverless",
+            "args": [
+                "invoke",
+                "local",
+                "-f",
+                "search-restaurants",
+                "-p",
+                "examples/search-restaurants.json"
+            ],
+            "env": {
+                "restaurant_table":"restaurants"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "get-index",
+            "program": "${workspaceFolder}/node_modules/serverless/bin/serverless",
+            "args": [
+                "invoke",
+                "local",
+                "-f",
+                "get-index",
+                "-d",
+                "{}"
+            ],
+            "env": {
+                "restaurants_api": "https://1k3vh5uqzl.execute-api.eu-west-1.amazonaws.com/dev/restaurants",
+                "cognito_user_pool_id": "eu-west-1_XUJlg27NJ",
+                "cognito_client_id": "j931tvl2lem9fl2scjn2kj3f9"
+            }
+        },
     ]
 }
