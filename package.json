@@ -16,11 +16,11 @@
         "fs": "0.0.1-security",
         "mustache": "^4.0.1",
         "superagent": "^5.2.2",
-        "superagent-promise": "^1.1.0"
+        "superagent-promise": "^1.1.0",
+        "awscred": "^1.5.0"
     },
     "devDependencies": {
         "aws-sdk": "^2.655.0",
-        "awscred": "^1.5.0",
         "chai": "^4.2.0",
         "chance": "^1.1.4",
         "cheerio": "^1.0.0-rc.3",
