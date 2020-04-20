@@ -15,6 +15,9 @@ provider:
     - Effect: "Allow"
       Action: execute-api:Invoke
       Resource: arn:aws:execute-api:#{AWS::Region}:#{AWS::AccountId}:*/*/GET/restaurants
+    - Effect: "Allow"
+      Action: kinesis:PutRecord
+      Resource: arn:aws:kinesis:#{AWS::Region}:#{AWS::AccountId}:stream/order_events
 functions:
   get-index:
     handler: functions/get-index.handler
@@ -24,6 +27,7 @@ functions:
           method: get
     environment:
       restaurants_api: https://1k3vh5uqzl.execute-api.eu-west-1.amazonaws.com/dev/restaurants
+      orders_api: https://1k3vh5uqzl.execute-api.eu-west-1.amazonaws.com/dev/orders
       cognito_user_pool_id: eu-west-1_XUJlg27NJ
       cognito_client_id: j931tvl2lem9fl2scjn2kj3f9
   get-restaurants:
@@ -42,9 +46,19 @@ functions:
           path: /restaurants/search
           method: post 
           authorizer: 
-            arn: arn:aws:cognito-idp:eu-west-1:328697909738:userpool/eu-west-1_XUJlg27NJ
+            arn: arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/eu-west-1_XUJlg27NJ
     environment:
       restaurant_table: restaurants
+  place-order:
+    handler: functions/place-order.handler
+    events: 
+      - http:
+          path: /orders
+          method: post 
+          authorizer: 
+            arn: arn:aws:cognito-idp:#{AWS::Region}:#{AWS::AccountId}:userpool/eu-west-1_XUJlg27NJ
+    environment:
+      order_events_stream: order_events    
 
 
 resources:
@@ -63,3 +77,8 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
 
+    orderEventsStream:
+      Type: AWS::Kinesis::Stream 
+      Properties:
+        Name: order_events
+        ShardCount: 1

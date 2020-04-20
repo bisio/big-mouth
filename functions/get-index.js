@@ -18,6 +18,7 @@ const cognitoClientId = process.env.cognito_client_id;
 
 
 const restaurantsApiroot = process.env.restaurants_api;
+const ordersApiroot = process.env.orders_api;
 
 var html;
 
@@ -63,7 +64,8 @@ module.exports.handler = co.wrap(function* (event, context, callback)  {
     awsRegion,
     cognitoUserPoolId,
     cognitoClientId,
-    searchUrl: `${restaurantsApiroot}/search`
+    searchUrl: `${restaurantsApiroot}/search`,
+    placeOrderUrl: `${ordersApiroot}`
   }
   let html = Mustache.render(template, view);
 
