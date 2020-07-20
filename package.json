@@ -14,7 +14,7 @@
         "chance": "^1.1.4",
         "co": "^4.6.0",
         "fs": "0.0.1-security",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.19",
         "mustache": "^4.0.1",
         "superagent": "^5.2.2",
         "superagent-promise": "^1.1.0"
